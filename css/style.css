@@ -16,6 +16,14 @@
     align-items: center;
 }
 
+.game-board.night-mode {
+    background: linear-gradient(#0c1442, #000000);
+}
+
+.game-board.orange-mode {
+    background: linear-gradient(#ff8c00, #000000);
+}
+
 .game-board {
     width: 100%;
     height: 100vh;

@@ -7,6 +7,7 @@ const animacaoScore = document.querySelector('#score');
 const dev = document.querySelector('.dev');
 const pular = document.getElementById('pular');
 let recorde = localStorage.getItem('recorde') ? parseInt(localStorage.getItem('recorde')) : 0;
+const gameBoard = document.getElementById('gameBoard');
 
 const jump = () => {
     mario.classList.add('jump');
@@ -34,7 +35,17 @@ let loop = setInterval(() => {
 
 }, 10);
 
-
+const updateGameBoardColor = (pontos) => {
+    if (pontos > 100 && pontos <= 200) {
+        gameBoard.classList.add('orange-mode');
+        gameBoard.classList.remove('night-mode');
+    } else if (pontos > 200) {
+        gameBoard.classList.remove('orange-mode');
+        gameBoard.classList.add('night-mode');
+    } else {
+        gameBoard.classList.remove('orange-mode', 'night-mode');
+    }
+};
 
 const gameOver = (pipePosition, marioPosition, chaoNum) => {
     pipe.style.animation = 'none';
@@ -142,7 +153,8 @@ const resetGame = () => {
 
     loopPontos = setInterval(() => {
         pontos++;
-        score.innerText = `Score: ${pontos}`
+        score.innerText = `Score: ${pontos}`;
+        updateGameBoardColor(pontos);
     },100);
 
     recorde = 0;
@@ -159,7 +171,8 @@ const updateRecord = () => {
 let pontos = 0;
 let loopPontos = setInterval(() => {
     pontos++;
-    score.innerText = `Score: ${pontos}`
+    score.innerText = `Score: ${pontos}`;
+    updateGameBoardColor(pontos);
 },100);
 
 document.getElementById('pular').addEventListener('click', jump );
