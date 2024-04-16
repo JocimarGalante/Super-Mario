@@ -9,9 +9,11 @@ const pular = document.getElementById('pular');
 let recorde = localStorage.getItem('recorde') ? parseInt(localStorage.getItem('recorde')) : 0;
 const gameBoard = document.getElementById('gameBoard');
 const marioMusic = document.getElementById('mario-music');
+const marioJump = document.getElementById('mario-jump');
 
 const jump = () => {
     mario.classList.add('jump');
+    marioJumpPlay();
 
     setTimeout(() => {
 
@@ -22,6 +24,10 @@ const jump = () => {
 
 function playMarioMusic() {
     marioMusic.play();
+}
+
+function marioJumpPlay() {
+    marioJump.play();
 }
 
 function pauseMarioMusic() {
