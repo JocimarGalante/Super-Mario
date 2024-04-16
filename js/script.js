@@ -156,9 +156,6 @@ const resetGame = () => {
         score.innerText = `Score: ${pontos}`;
         updateGameBoardColor(pontos);
     },100);
-
-    recorde = 0;
-    window.onload = updateRecord;
 };
 
 const updateRecord = () => {
@@ -173,6 +170,8 @@ let loopPontos = setInterval(() => {
     pontos++;
     score.innerText = `Score: ${pontos}`;
     updateGameBoardColor(pontos);
+    recorde = 0;
+    window.onload = updateRecord;
 },100);
 
 document.getElementById('pular').addEventListener('click', jump );
