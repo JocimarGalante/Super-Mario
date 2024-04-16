@@ -159,6 +159,8 @@ const resetGame = () => {
     reset.style.display = 'none';
 
     playMarioMusic();
+    marioGameOver.pause();
+    marioGameOver.currentTime = 0;
 
     // reinicia os loops do jogo
     loop = setInterval(() => {
