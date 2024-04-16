@@ -52,6 +52,11 @@
     margin-top: 10px;
 }
 
+.record{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
 .pipe {
     position: absolute;
     bottom: 84px;
@@ -139,7 +144,7 @@
 .dev {
     display: none;
     position: absolute;
-    top: 95%;
+    top: 96%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: max-content;

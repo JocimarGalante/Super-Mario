@@ -6,6 +6,7 @@ const score = document.getElementById('score');
 const animacaoScore = document.querySelector('#score');
 const dev = document.querySelector('.dev');
 const pular = document.getElementById('pular');
+let recorde = localStorage.getItem('recorde') ? parseInt(localStorage.getItem('recorde')) : 0;
 
 const jump = () => {
     mario.classList.add('jump');
@@ -33,6 +34,8 @@ let loop = setInterval(() => {
 
 }, 10);
 
+
+
 const gameOver = (pipePosition, marioPosition, chaoNum) => {
     pipe.style.animation = 'none';
     pipe.style.left = `${pipePosition}px`
@@ -43,6 +46,12 @@ const gameOver = (pipePosition, marioPosition, chaoNum) => {
     // let marioBottom = mario.style.bottom;
     // marioBottom = `${marioPosition}px`;
     // console.log(`${marioBottom}`);
+
+    if (pontos > recorde) {
+        recorde = pontos;
+        localStorage.setItem('recorde', recorde); // Salve o novo recorde no localStorage
+        updateRecord(); // Chame a função para atualizar o recorde na interface
+    }
 
 
     mario.style.bottom = `${marioPosition}px`;
@@ -135,8 +144,15 @@ const resetGame = () => {
         pontos++;
         score.innerText = `Score: ${pontos}`
     },100);
+
+    recorde = 0;
+    window.onload = updateRecord;
 };
 
+const updateRecord = () => {
+    // Atualize o elemento HTML com o valor do recorde
+    document.getElementById('record').innerText = `Recorde: ${recorde}`;
+};
 
 /**/
 
