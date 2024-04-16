@@ -10,6 +10,7 @@ let recorde = localStorage.getItem('recorde') ? parseInt(localStorage.getItem('r
 const gameBoard = document.getElementById('gameBoard');
 const marioMusic = document.getElementById('mario-music');
 const marioJump = document.getElementById('mario-jump');
+const marioGameOver = document.getElementById('game-over');
 
 const jump = () => {
     mario.classList.add('jump');
@@ -28,6 +29,10 @@ function playMarioMusic() {
 
 function marioJumpPlay() {
     marioJump.play();
+}
+
+function marioGameOverPlay() {
+    marioGameOver.play();
 }
 
 function pauseMarioMusic() {
@@ -96,6 +101,7 @@ const gameOver = (pipePosition, marioPosition, chaoNum) => {
     clearInterval(loop);
     clearInterval(loopPontos);
     pauseMarioMusic();
+    marioGameOverPlay();
 }
 /**/
 
