@@ -8,6 +8,7 @@ const dev = document.querySelector('.dev');
 const pular = document.getElementById('pular');
 let recorde = localStorage.getItem('recorde') ? parseInt(localStorage.getItem('recorde')) : 0;
 const gameBoard = document.getElementById('gameBoard');
+const marioMusic = document.getElementById('mario-music');
 
 const jump = () => {
     mario.classList.add('jump');
@@ -17,6 +18,15 @@ const jump = () => {
         mario.classList.remove('jump');
 
     }, 500);
+}
+
+function playMarioMusic() {
+    marioMusic.play();
+}
+
+function pauseMarioMusic() {
+    marioMusic.pause();
+    marioMusic.currentTime = 0;
 }
 
 let loop = setInterval(() => {
@@ -50,7 +60,6 @@ const updateGameBoardColor = (pontos) => {
 const gameOver = (pipePosition, marioPosition, chaoNum) => {
     pipe.style.animation = 'none';
     pipe.style.left = `${pipePosition}px`
-    
     pular.setAttribute('disabled', true);
     // mario.style.animation = 'none';
 
@@ -80,6 +89,7 @@ const gameOver = (pipePosition, marioPosition, chaoNum) => {
     reset.style.display = 'inline';
     clearInterval(loop);
     clearInterval(loopPontos);
+    pauseMarioMusic();
 }
 /**/
 
@@ -136,6 +146,8 @@ const resetGame = () => {
     dev.style.display = 'none';
     reset.style.display = 'none';
 
+    playMarioMusic();
+
     // reinicia os loops do jogo
     loop = setInterval(() => {
         const pipePosition = pipe.offsetLeft;
@@ -172,6 +184,7 @@ let loopPontos = setInterval(() => {
     updateGameBoardColor(pontos);
     recorde = 0;
     window.onload = updateRecord;
+    playMarioMusic();
 },100);
 
 document.getElementById('pular').addEventListener('click', jump );
