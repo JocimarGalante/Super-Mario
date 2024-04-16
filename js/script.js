@@ -1,5 +1,6 @@
 const mario = document.querySelector(".mario");
 const pipe = document.querySelector(".pipe");
+const missil = document.querySelector(".missil");
 const chao = document.querySelector(".chao");
 const reset = document.getElementById("reiniciar");
 const score = document.getElementById("score");
@@ -16,6 +17,8 @@ const marioGameOver = document.getElementById("game-over");
 const mutar = document.getElementById("mutar");
 let musicaMuda = localStorage.getItem("musicaMuda") === "true" ? true : false;
 mutar.innerText = musicaMuda ? "Tocar" : "Mutar";
+let position = 0;
+let tipo = true;
 
 const jump = () => {
   mario.classList.add("jump");
@@ -73,6 +76,7 @@ function pauseAllSounds() {
 
 let loop = setInterval(() => {
   const pipePosition = pipe.offsetLeft;
+  const missilPosition = missil.offsetLeft;
   const marioPosition = +window
     .getComputedStyle(mario)
     .bottom.replace("px", "");
@@ -84,7 +88,24 @@ let loop = setInterval(() => {
   const chaoNum = parseFloat(chaoPositionSemPX);
 
   if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 170) {
-    gameOver(pipePosition, marioPosition, chaoNum);
+    position = pipePosition;
+    tipo = false;
+    gameOver(position, tipo, marioPosition, chaoNum);
+  } else if (
+    missilPosition <= 120 &&
+    missilPosition > 0 &&
+    marioPosition < 170
+  ) {
+    position = missilPosition;
+    tipo = true;
+    gameOver(position, tipo, marioPosition, chaoNum);
+  }
+  if (pontos > 100) {
+    missil.style.display = "block";
+    pipe.style.display = "none"; // Oculta o elemento .pipe
+  } else {
+    missil.style.display = "none";
+    pipe.style.display = "block"; // Exibe o elemento .pipe
   }
 }, 10);
 
@@ -100,9 +121,15 @@ const updateGameBoardColor = (pontos) => {
   }
 };
 
-const gameOver = (pipePosition, marioPosition, chaoNum) => {
-  pipe.style.animation = "none";
-  pipe.style.left = `${pipePosition}px`;
+const gameOver = (position, tipo, marioPosition, chaoNum) => {
+  if (!tipo) {
+    pipe.style.animation = "none";
+    pipe.style.left = `${position}px`;
+  } else {
+    missil.style.animation = "none";
+    missil.style.left = `${position}px`;
+  }
+
   pular.setAttribute("disabled", true);
 
   if (pontos > recorde) {
@@ -162,8 +189,13 @@ const resetGame = () => {
   mario.style.width = originalMario.width;
   mario.style.marginLeft = originalMario.marginLeft;
 
-  pipe.style.animation = originalPipe.animation;
-  pipe.style.left = originalPipe.left;
+  if (!tipo) {
+    pipe.style.animation = originalPipe.animation;
+    pipe.style.left = originalPipe.left;
+  } else {
+    missil.style.animation = originalPipe.animation;
+    missil.style.left = originalPipe.left;
+  }
 
   chao.style.animation = originalChao.animation;
   chao.style.backgroundPosition = originalChao.backgroundPosition;
@@ -177,6 +209,7 @@ const resetGame = () => {
 
   loop = setInterval(() => {
     const pipePosition = pipe.offsetLeft;
+    const missilPosition = missil.offsetLeft;
     const marioPosition = +window
       .getComputedStyle(mario)
       .bottom.replace("px", "");
@@ -188,7 +221,25 @@ const resetGame = () => {
     const chaoNum = parseFloat(chaoPositionSemPX);
 
     if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 170) {
-      gameOver(pipePosition, marioPosition, chaoNum);
+      position = pipePosition;
+      tipo = false;
+      gameOver(position, tipo, marioPosition, chaoNum);
+    } else if (
+      missilPosition <= 120 &&
+      missilPosition > 0 &&
+      marioPosition < 170
+    ) {
+      position = missilPosition;
+      tipo = true;
+      gameOver(position, tipo, marioPosition, chaoNum);
+    }
+
+    if (pontos > 100) {
+      missil.style.display = "block";
+      pipe.style.display = "none"; // Oculta o elemento .pipe
+    } else {
+      missil.style.display = "none";
+      pipe.style.display = "block"; // Exibe o elemento .pipe
     }
   }, 10);
 
